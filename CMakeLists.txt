@@ -8,12 +8,15 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  cv_bridge
+  image_transport
   message_generation  
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
+find_package(OpenCV)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -99,6 +102,9 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+
 ## Declare a cpp library
 # add_library(rover
 #   src/${PROJECT_NAME}/rover.cpp
@@ -121,6 +127,9 @@ target_link_libraries(dynamixel_wheel_node ${catkin_LIBRARIES})
 
 add_executable(sick_lidar_node src/sick_lidar_node.cpp)
 target_link_libraries(sick_lidar_node ${catkin_LIBRARIES})
+
+add_executable(ptgrey_cam_node src/ptgrey_cam.cpp)
+target_link_libraries(ptgrey_cam_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} flycapture)
 
 
 #############
